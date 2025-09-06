@@ -56,6 +56,7 @@ export interface ChatUser {
   id: string; // stable user id (ULID/snowflake)
   username: string; // immutable slug; use displayName if you later add it
   displayName?: string; // optional pretty casing
+  color?: string; // optional color hex
   badgeIds: BadgeId[]; // e.g. ["mod","vip"] — unique, sorted not required
 }
 
