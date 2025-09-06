@@ -137,4 +137,15 @@ export const control = {
       },
       p
     ),
+  viewerCount: (p: { count: number }, fileId = 0) =>
+    encodeFrame(
+      {
+        channel: ChannelId.CONTROL,
+        type: ControlType.VIEWER_COUNT,
+        flags: 0,
+        fileId: 0,
+        txnId: 0,
+      },
+      p
+    ),
 } as const;

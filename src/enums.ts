@@ -17,6 +17,7 @@ export enum ControlType {
   FILE_INFO = 6,
   CURSOR = 7,
   HIGHLIGHTS = 8,
+  VIEWER_COUNT = 9,
 }
 
 // Code update messages
