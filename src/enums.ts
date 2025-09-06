@@ -15,6 +15,8 @@ export enum ControlType {
   ACK = 4,
   ERROR = 5,
   FILE_INFO = 6,
+  CURSOR = 7,
+  HIGHLIGHTS = 8,
 }
 
 // Code update messages

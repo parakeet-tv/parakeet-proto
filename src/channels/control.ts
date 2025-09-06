@@ -94,4 +94,47 @@ export const control = {
       },
       p
     ),
+  cursor: (
+    p: {
+      cursors: Array<{
+        anchor: { line: number; ch: number };
+        head: { line: number; ch: number };
+      }>;
+    },
+    fileId = 0
+  ) =>
+    encodeFrame(
+      {
+        channel: ChannelId.CONTROL,
+        type: ControlType.CURSOR,
+        flags: 0,
+        fileId: fileId >>> 0,
+        txnId: 0,
+      },
+      p
+    ),
+
+  /** Highlight ranges for a file (e.g., VS Code document highlights). */
+  highlights: (
+    p: {
+      ranges: Array<{
+        sl: number;
+        sc: number;
+        el: number;
+        ec: number;
+        kind?: number; // VS Code DocumentHighlightKind (0:text,1:read,2:write)
+      }>;
+    },
+    fileId = 0
+  ) =>
+    encodeFrame(
+      {
+        channel: ChannelId.CONTROL,
+        type: ControlType.HIGHLIGHTS,
+        flags: 0,
+        fileId: fileId >>> 0,
+        txnId: 0,
+      },
+      p
+    ),
 } as const;
