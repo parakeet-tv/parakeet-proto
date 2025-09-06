@@ -14,6 +14,7 @@ export enum ControlType {
   REPLAY_REQUEST = 3, // request deltas from seq (active or inactive)
   ACK = 4,
   ERROR = 5,
+  FILE_INFO = 6,
 }
 
 // Code update messages

@@ -83,4 +83,15 @@ export const control = {
       },
       p
     ),
+  fileInfo: (p: { fileId: number; path: string; displayName?: string }) =>
+    encodeFrame(
+      {
+        channel: ChannelId.CONTROL,
+        type: ControlType.FILE_INFO,
+        flags: 0,
+        fileId: p.fileId >>> 0,
+        txnId: 0,
+      },
+      p
+    ),
 } as const;
