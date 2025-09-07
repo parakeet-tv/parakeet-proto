@@ -148,4 +148,15 @@ export const control = {
       },
       p
     ),
+  auth: (p: { token: string }) =>
+    encodeFrame(
+      {
+        channel: ChannelId.CONTROL,
+        type: ControlType.AUTH,
+        flags: 0,
+        fileId: 0,
+        txnId: 0,
+      },
+      p
+    ),
 } as const;
