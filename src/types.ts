@@ -53,6 +53,7 @@ export interface CtrlUpdateMetadata {
   title: string;
   description: string;
   tags: string[];
+  isLive: boolean;
 }
 
 // ------- Chat payloads (MessagePack) -------
