@@ -5,6 +5,7 @@ import type {
   CtrlHello,
   CtrlReplayRequest,
   CtrlSnapshotRequest,
+  CtrlUpdateMetadata,
   CtrlWelcome,
 } from "../types.js";
 import { encodeFrame } from "../frame.js";
@@ -148,4 +149,26 @@ export const control = {
       },
       p
     ),
+    goLive: () =>
+      encodeFrame(
+        {
+          channel: ChannelId.CONTROL,
+          type: ControlType.GO_LIVE,
+          flags: 0,
+          fileId: 0,
+          txnId: 0,
+        },
+        {}
+      ),
+    updateMetadata: (p: CtrlUpdateMetadata) =>
+      encodeFrame(
+        {
+          channel: ChannelId.CONTROL,
+          type: ControlType.UPDATE_METADATA,
+          flags: 0,
+          fileId: 0,
+          txnId: 0,
+        },
+        p
+      ),
 } as const;

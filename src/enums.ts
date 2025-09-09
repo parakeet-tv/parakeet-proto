@@ -18,6 +18,8 @@ export enum ControlType {
   CURSOR = 7,
   HIGHLIGHTS = 8,
   VIEWER_COUNT = 9,
+  GO_LIVE = 10,
+  UPDATE_METADATA = 11,
 }
 
 // Code update messages

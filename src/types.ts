@@ -49,6 +49,12 @@ export interface CtrlError {
   message: string;
 }
 
+export interface CtrlUpdateMetadata {
+  title: string;
+  description: string;
+  tags: string[];
+}
+
 // ------- Chat payloads (MessagePack) -------
 export type BadgeId = string; // e.g. "mod", "vip", "sub"
 
