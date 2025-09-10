@@ -4,6 +4,7 @@ export enum ChannelId {
   CONTROL = 0,
   CODE = 1,
   CHAT = 2,
+  TERMINAL = 3,
 }
 
 // Control messages
@@ -33,6 +34,20 @@ export enum CodeType {
 export enum ChatType {
   USER = 0,
   SYSTEM = 1,
+}
+
+// Terminal messages
+export enum TerminalType {
+  OPEN = 0,        // terminal created
+  CLOSE = 1,       // terminal disposed
+  OUTPUT = 2,      // stdout/stderr chunk(s)
+  INPUT = 3,       // text sent to the terminal
+  RESIZE = 4,      // rows/cols changed
+  TITLE = 5,       // name/title changed
+  STATE = 6,       // focus/active/cwd/shell-integration changes
+  SNAPSHOT = 7,    // current set of open terminals (+ optional scrollback)
+  EXEC_START = 8,  // (optional) shell execution started
+  EXEC_END = 9,    // (optional) shell execution ended
 }
 
 // Flags

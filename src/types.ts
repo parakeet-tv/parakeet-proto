@@ -8,7 +8,7 @@ export interface Header {
   type: number; // u8 (per-channel enum)
   flags: number; // u8 bitfield
   length: U32; // u32 be
-  fileId: U32; // u32 be (0 for single-active-file mode)
+  fileId: U32; // u32 be (0 for single-active-file mode) - for terminal, it's the terminal id
   txnId: U32; // u32 be (0 for no transaction)
 }
 
@@ -82,4 +82,96 @@ export interface ChatSystemMsg {
   id: string; // ULID
   sentAt: number; // epoch ms
   content: string; // what to show (italic)
+}
+
+// ------- Terminal payloads (MessagePack) -------
+// Note: header.fileId === terminalId for all TERMINAL frames except SNAPSHOT (fileId = 0)
+
+export type TerminalId = U32;
+
+export interface TerminalOpen {
+  id: TerminalId; // echoed for convenience; also in header.fileId
+  name: string; // vscode.Terminal.name
+  pid?: number | null; // terminal.processId
+  cols?: number;
+  rows?: number;
+  cwd?: string | null; // shellIntegration?.cwd
+  hasShellIntegration?: boolean;
+  isActive?: boolean; // whether this is the active terminal on sender
+}
+
+export interface TerminalClose {
+  at: number; // epoch ms
+  exitCode?: number | null; // if available
+  reason?: string; // optional human string
+}
+
+export type TerminalStream = 0 | 1; // 0=stdout, 1=stderr (stdout if unknown)
+
+export interface TerminalOutput {
+  seq: U32; // per-terminal monotonic counter
+  at: number; // epoch ms
+  stream?: TerminalStream; // default 0
+  data: Uint8Array; // raw bytes (UTF-8 encoded if from VS Code string)
+  more?: boolean; // hint: additional chunks immediately follow
+}
+
+export interface TerminalInput {
+  seq: U32; // per-terminal monotonic counter
+  at: number; // epoch ms
+  data: Uint8Array; // text sent to the terminal
+  source?: "keyboard" | "paste" | "api";
+  echo?: boolean; // if input already appears in OUTPUT
+}
+
+export interface TerminalResize {
+  at: number; // epoch ms
+  cols: number;
+  rows: number;
+}
+
+export interface TerminalTitle {
+  at: number; // epoch ms
+  name: string; // new name/title
+}
+
+export interface TerminalState {
+  at: number; // epoch ms
+  isActive?: boolean;
+  cwd?: string | null;
+  hasShellIntegration?: boolean;
+}
+
+export interface TerminalExecStart {
+  at: number;
+  command?: string; // event.execution.commandLine?.value
+  cwd?: string | null;
+  execId: U32; // per-terminal execution id
+}
+
+export interface TerminalExecEnd {
+  at: number;
+  execId: U32;
+  exitCode: number | null;
+}
+
+export interface TerminalSnapshotTerminal {
+  id: TerminalId;
+  name: string;
+  cols?: number;
+  rows?: number;
+  cwd?: string | null;
+  hasShellIntegration?: boolean;
+  createdAt: number;
+  isActive?: boolean;
+
+  // Optional scrollback preview so new viewers see context
+  // If present, this is the last N bytes as raw data with its first seq
+  scrollbackSeqStart?: U32;
+  scrollback?: Uint8Array;
+}
+
+export interface TerminalSnapshot {
+  at: number; // epoch ms
+  terminals: TerminalSnapshotTerminal[];
 }
