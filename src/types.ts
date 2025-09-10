@@ -54,6 +54,7 @@ export interface CtrlUpdateMetadata {
   description: string;
   tags: string[];
   isLive: boolean;
+  startTime: number;
 }
 
 // ------- Chat payloads (MessagePack) -------
