@@ -171,4 +171,15 @@ export const control = {
         },
         p
       ),
+      broadcaster: () =>
+        encodeFrame(
+          {
+            channel: ChannelId.CONTROL,
+            type: ControlType.BROADCASTER,
+            flags: 0,
+            fileId: 0,
+            txnId: 0,
+          },
+          {}
+        ),
 } as const;

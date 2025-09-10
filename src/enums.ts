@@ -20,6 +20,7 @@ export enum ControlType {
   VIEWER_COUNT = 9,
   GO_LIVE = 10,
   UPDATE_METADATA = 11,
+  BROADCASTER = 12,
 }
 
 // Code update messages
