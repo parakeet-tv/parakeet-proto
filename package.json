@@ -1,6 +1,6 @@
 {
   "name": "parakeet-proto",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "description": "Tiny binary protocol (header + msgpack + Yjs) for streaming code, chat, and control over a single WebSocket.",
   "type": "module",
   "sideEffects": false,

@@ -6,3 +6,4 @@ export * as Control from "./channels/control.js";
 export * as Code from "./channels/code.js";
 export * as Chat from "./channels/chat.js";
 export * as Hash from "./utils/hash.js";
+export * as Terminal from "./channels/terminal.js";
