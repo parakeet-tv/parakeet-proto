@@ -53,6 +53,9 @@ export interface CtrlUpdateMetadata {
   title: string;
   description: string;
   tags: string[];
+}
+
+export interface CtrlStreamStatus {
   isLive: boolean;
   startTime: number;
 }

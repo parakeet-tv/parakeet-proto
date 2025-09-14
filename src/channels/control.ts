@@ -5,6 +5,7 @@ import type {
   CtrlHello,
   CtrlReplayRequest,
   CtrlSnapshotRequest,
+  CtrlStreamStatus,
   CtrlUpdateMetadata,
   CtrlWelcome,
 } from "../types.js";
@@ -149,37 +150,59 @@ export const control = {
       },
       p
     ),
-    goLive: () =>
-      encodeFrame(
-        {
-          channel: ChannelId.CONTROL,
-          type: ControlType.GO_LIVE,
-          flags: 0,
-          fileId: 0,
-          txnId: 0,
-        },
-        {}
-      ),
-    updateMetadata: (p: CtrlUpdateMetadata) =>
-      encodeFrame(
-        {
-          channel: ChannelId.CONTROL,
-          type: ControlType.UPDATE_METADATA,
-          flags: 0,
-          fileId: 0,
-          txnId: 0,
-        },
-        p
-      ),
-      broadcaster: () =>
-        encodeFrame(
-          {
-            channel: ChannelId.CONTROL,
-            type: ControlType.BROADCASTER,
-            flags: 0,
-            fileId: 0,
-            txnId: 0,
-          },
-          {}
-        ),
+  startStream: () =>
+    encodeFrame(
+      {
+        channel: ChannelId.CONTROL,
+        type: ControlType.START_STREAM,
+        flags: 0,
+        fileId: 0,
+        txnId: 0,
+      },
+      {}
+    ),
+  stopStream: () =>
+    encodeFrame(
+      {
+        channel: ChannelId.CONTROL,
+        type: ControlType.STOP_STREAM,
+        flags: 0,
+        fileId: 0,
+        txnId: 0,
+      },
+      {}
+    ),
+  streamStatus: (p: CtrlStreamStatus) =>
+    encodeFrame(
+      {
+        channel: ChannelId.CONTROL,
+        type: ControlType.STREAM_STATUS,
+        flags: 0,
+        fileId: 0,
+        txnId: 0,
+      },
+      p
+    ),
+  updateMetadata: (p: CtrlUpdateMetadata) =>
+    encodeFrame(
+      {
+        channel: ChannelId.CONTROL,
+        type: ControlType.UPDATE_METADATA,
+        flags: 0,
+        fileId: 0,
+        txnId: 0,
+      },
+      p
+    ),
+  broadcaster: () =>
+    encodeFrame(
+      {
+        channel: ChannelId.CONTROL,
+        type: ControlType.BROADCASTER,
+        flags: 0,
+        fileId: 0,
+        txnId: 0,
+      },
+      {}
+    ),
 } as const;

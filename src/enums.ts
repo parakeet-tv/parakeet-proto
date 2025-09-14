@@ -19,9 +19,11 @@ export enum ControlType {
   CURSOR = 7,
   HIGHLIGHTS = 8,
   VIEWER_COUNT = 9,
-  GO_LIVE = 10,
+  START_STREAM = 10,
   UPDATE_METADATA = 11,
   BROADCASTER = 12,
+  STOP_STREAM = 13,
+  STREAM_STATUS = 14,
 }
 
 // Code update messages

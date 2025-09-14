@@ -102,6 +102,50 @@ describe("control channel", () => {
     expect(he.type).toBe(ControlType.ERROR);
     expect(mErr.code).toBe("BAD_REQ");
   });
+
+  it("START_STREAM encodes correctly", () => {
+    const startStreamFrame = Control.control.startStream();
+    const { header, payloadView } = decodeHeaderOnly(startStreamFrame);
+    const msg = unpackMsgpack<any>(payloadView);
+
+    expect(header.channel).toBe(ChannelId.CONTROL);
+    expect(header.type).toBe(ControlType.START_STREAM);
+    expect(header.flags).toBe(0);
+    expect(header.fileId).toBe(0);
+    expect(header.txnId).toBe(0);
+    expect(msg).toEqual({});
+  });
+
+  it("STOP_STREAM encodes correctly", () => {
+    const stopStreamFrame = Control.control.stopStream();
+    const { header, payloadView } = decodeHeaderOnly(stopStreamFrame);
+    const msg = unpackMsgpack<any>(payloadView);
+
+    expect(header.channel).toBe(ChannelId.CONTROL);
+    expect(header.type).toBe(ControlType.STOP_STREAM);
+    expect(header.flags).toBe(0);
+    expect(header.fileId).toBe(0);
+    expect(header.txnId).toBe(0);
+    expect(msg).toEqual({});
+  });
+
+  it("STREAM_STATUS encodes correctly", () => {
+    const now = Date.now();
+    const streamStatusFrame = Control.control.streamStatus({
+      isLive: true,
+      startTime: now,
+    });
+    const { header, payloadView } = decodeHeaderOnly(streamStatusFrame);
+    const msg = unpackMsgpack<any>(payloadView);
+
+    expect(header.channel).toBe(ChannelId.CONTROL);
+    expect(header.type).toBe(ControlType.STREAM_STATUS);
+    expect(header.flags).toBe(0);
+    expect(header.fileId).toBe(0);
+    expect(header.txnId).toBe(0);
+    expect(msg.isLive).toBe(true);
+    expect(msg.startTime).toBe(now);
+  });
 });
 
 describe("chat channel", () => {
