@@ -8,7 +8,7 @@ import { PROTOCOL_VERSION } from "./enums.js";
  * Otherwise it's MessagePack-encoded.
  */
 export function encodeFrame(
-  h: Omit<Header, "version" | "length"> & { version?: number },
+  h: { channel: Header["channel"]; type: Header["type"]; version?: number; flags?: number; fileId?: number; txnId?: number },
   payload: Uint8Array | object
 ): Uint8Array {
   const body = payload instanceof Uint8Array ? payload : mpack(payload);

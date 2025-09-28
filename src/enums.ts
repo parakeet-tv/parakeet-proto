@@ -5,6 +5,7 @@ export enum ChannelId {
   CODE = 1,
   CHAT = 2,
   TERMINAL = 3,
+  AUDIO = 4,
 }
 
 // Control messages
@@ -57,4 +58,30 @@ export enum Flags {
   NONE = 0,
   COMPRESSED = 1 << 0,
   ACK_REQUIRED = 1 << 1,
+}
+
+// Audio messages
+export enum AudioType {
+  START_INTENT = 0,          // broadcaster -> server
+  WEBRTC_OFFER = 1,          // any -> server
+  WEBRTC_ANSWER = 2,         // server -> any
+
+  TRACKS_PUBLISH = 3,        // publisher -> server
+  AVAILABLE = 4,             // server -> all
+  UNAVAILABLE = 5,           // server -> all
+
+  // multi-publisher
+  CATALOG = 6,               // server -> all
+  GRANT_MIC = 7,             // host -> server
+  REVOKE_MIC = 8,            // host -> server
+  SPEAK_ENABLE = 9,          // server -> target user
+  SPEAK_DISABLE = 10,        // server -> target user
+  TRACKS_ADDED = 11,         // server -> all
+  TRACKS_REMOVED = 12,       // server -> all
+
+  SUBSCRIBE = 13,            // viewer -> server
+  SUBSCRIBE_ALL = 14,        // viewer -> server
+  RENEGOTIATE_OFFER = 15,    // server -> viewer
+  RENEGOTIATE_ANSWER = 16,   // viewer -> server
+  SUBSCRIBED = 17,           // server -> viewer (ack)
 }

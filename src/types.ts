@@ -178,3 +178,99 @@ export interface TerminalSnapshot {
   at: number; // epoch ms
   terminals: TerminalSnapshotTerminal[];
 }
+
+// ------- Audio payloads (MessagePack) -------
+
+export type AudioRole = "publisher" | "viewer";
+
+export interface AudioStartIntent {
+  trackName?: string; // default "audio-main" on server if omitted
+}
+
+export interface AudioWebrtcOffer {
+  role: AudioRole; // "publisher" | "viewer"
+  sdp: string;     // local offer SDP
+}
+
+export interface AudioWebrtcAnswer {
+  role: AudioRole;
+  sdp: string;        // remote answer SDP
+  sessionId: string;  // Cloudflare session id for this peer
+}
+
+export interface AudioTracksPublish {
+  sessionId: string;  // publisher's own CF session id
+  offer: string;      // local offer that includes the publishing transceiver(s)
+  tracks: Array<{ mid: string; trackName: string }>;
+}
+
+export interface AudioAvailable {
+  publisherSessionId: string;
+  trackName: string; // e.g. "audio-main"
+}
+
+export interface AudioUnavailable {} // empty payload
+
+// ---- Multi-publisher support ----
+export interface AudioCatalogTrack {
+  userId: string;
+  sessionId: string;
+  trackName: string;
+  label?: string;
+}
+
+export interface AudioCatalog {
+  tracks: AudioCatalogTrack[];
+}
+
+export interface AudioGrantMic {
+  targetUserId: string;
+  trackName?: string; // default "guest:<userId>"
+  label?: string;     // optional UI label
+}
+
+export interface AudioRevokeMic {
+  targetUserId: string;
+}
+
+export interface AudioSpeakEnable {
+  trackName: string;
+  label?: string;
+}
+
+export interface AudioSpeakDisable {} // empty payload
+
+export interface AudioTracksAdded {
+  added: AudioCatalogTrack[];
+}
+
+export interface AudioTracksRemoved {
+  removed: Array<{ userId: string; trackName: string }>;
+}
+
+// Subscribe to one or more remote tracks on the viewer session
+export interface AudioSubscribe {
+  viewerSessionId: string;
+  wants: Array<{ sessionId: string; trackName: string }>;
+}
+
+// Convenience: subscribe viewer to *all* tracks currently in the catalog
+export interface AudioSubscribeAll {
+  viewerSessionId: string;
+}
+
+// Cloudflare renegotiation dance (viewer <-> server)
+export interface AudioRenegotiateOffer {
+  reason: "subscribe";
+  sdp: string;        // remote offer for the viewer
+  sessionId: string;  // viewer session id
+}
+
+export interface AudioRenegotiateAnswer {
+  sessionId: string;  // viewer session id
+  sdp: string;        // viewer's local answer
+}
+
+export interface AudioSubscribed {
+  sessionId: string;  // viewer session id
+}
