@@ -7,3 +7,4 @@ export * as Code from "./channels/code.js";
 export * as Chat from "./channels/chat.js";
 export * as Hash from "./utils/hash.js";
 export * as Terminal from "./channels/terminal.js";
+export * as Audio from "./channels/audio.js";
